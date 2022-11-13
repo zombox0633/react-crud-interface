@@ -1,7 +1,9 @@
+import React from "react"
 import styled from "styled-components"
 
 const Button = styled.button`
-  background-color: #1e1e1e;
+  background-color: ${(props)=>
+    props.BgColor ? props.BgColor : '#1e1e1e'};
   width: 129px;
   height: 44px;
   color: #fff;
@@ -29,10 +31,31 @@ const Button = styled.button`
     transform: scale(0.98);
     transition: 0.35s ease-in;
   }
+  &:disabled {
+    filter: brightness(0.8);
+    cursor: not-allowed;
+    &:active {
+      transform: scale(1);
+    }
+  }
 `
-function AddTaskButton(){
+function AddTaskButton({
+  BgColor,
+  onClick, 
+  disabled,
+  type = "button",
+  onSubmit }){
     return(
-        <Button>Add task<i className='fa-solid fa-plus'></i></Button>
+        <Button 
+          type={type}
+          BgColor={BgColor} 
+          //onClick={()=> onClick()} 
+          onClick={() => onClick && onClick()}
+          onSubmit={() => onSubmit && onSubmit()}
+          disabled={disabled}
+        >
+          Add task<i className='fa-solid fa-plus'></i>
+        </Button>
     )
 }
 export default AddTaskButton
