@@ -1,7 +1,8 @@
-import React, { useMemo, useState } from "react"
+import React, { useMemo, useState ,useContext} from "react"
 import { toast } from "react-toastify"
 import styled from "styled-components"
 import AddTaskButton from "./AddTaskButton"
+import { TodoContext } from "../context/todoContext"
 
 const ModalWrapper = styled.div`
   position: fixed;
@@ -48,8 +49,12 @@ const Input = styled.input`
   margin-bottom: auto;
 `
 
-function CreateTodoModal({ onClose, onFetchData, onCreateNewTodo }) {
-
+function CreateTodoModal({ onClose}) {
+  const {
+    onFetchData,
+    onCreateNewTodo
+  } = useContext(TodoContext) 
+  
   const [content, setContent] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   //const inputEle = useRef()

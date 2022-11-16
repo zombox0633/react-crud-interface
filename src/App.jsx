@@ -41,22 +41,14 @@ function App() {
   const {
     isOpenModal,
     setIsOpenModal,
-    onCreateNewTodo,
-    onFetchData,
-    todos,
-    handleEscapeOnCloseModal,
-    onUpdatedTodo,
-    isLoading
   } = useTodo()
-  // console.log(process.env.REACT_APP_BASE_URL_API)
+  //console.log(process.env.REACT_APP_BASE_URL_API)
   return (
     <TodoProvider>
       <Container customPadding='2rem 0'>
         <ToastContainer/>
         {isOpenModal &&(
           <CreateTodoModal
-          onCreateNewTodo={onCreateNewTodo}
-          onFetchData={onFetchData}
           onClose = {()=>{
             setIsOpenModal((prev)=>!prev)
           }}
@@ -64,16 +56,13 @@ function App() {
         )}
         <ButtonWrapper>
           <AddTaskButton
-            disabled={isLoading}
             onClick={()=>{
               setIsOpenModal((prev)=>!prev)
             }}
           />
         </ButtonWrapper>
         <ListWrapper>
-          <Ul data={todos}  
-          onUpdatedTodo={onUpdatedTodo}
-          disabled={isLoading}/>
+          <Ul/>
         </ListWrapper>
       </Container>
     </TodoProvider>

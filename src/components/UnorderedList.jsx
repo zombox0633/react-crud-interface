@@ -13,23 +13,32 @@ justify-content: center;
 align-items: center;
 `
 
-function Ul({data,onUpdatedTodo,disabled}){
-    const counterContext = useContext(TodoContext)
+function Ul(){
+    const {
+    todos,
+    isLoading,
+    onUpdatedTodo,
+    onDelete} = useContext(TodoContext)
+    // const todoData = counterContext.todos
+    // const loading = counterContext.isLoading
+    // const update = counterContext.onUpdatedTodo
+    // const Delete = counterContext.onDelete
     return(
         <Ui>
-            <h1>{counterContext.counter}</h1>
-            {data &&
-                data.map((todo,index)=>{
+            {/* <h1>{counterContext.counter}</h1> */}
+            {todos &&
+                todos.map((todo,index)=>{
                     return (
                         <ContentList
                         key={todo.id}
                         status={todo.status}
                         onUpdatedTodo={onUpdatedTodo}
+                        onDelete={onDelete}
                         id={todo.id}
                         data={todo}
-                        disabled={disabled}
+                        disabled={isLoading}
                         >
-                            {todo.content}
+                          {todo.content}
                         </ContentList>
                     )
             })}

@@ -43,7 +43,6 @@ const Button = styled.button`
 function AddTaskButton({
   BgColor,
   onClick, 
-  disabled,
   type = "button",
   onSubmit }){
     const counterContext = useContext(TodoContext)
@@ -51,16 +50,15 @@ function AddTaskButton({
         <Button 
           type={type}
           BgColor={BgColor} 
-          //onClick={()=> onClick()} 
           onClick={() => {
-            //onClick && onClick()
-            counterContext.onIncrement()
+            onClick && onClick()
+            //counterContext.onIncrement()
           }}
           onSubmit={() => onSubmit && onSubmit()}
-          disabled={disabled}
+          disabled={counterContext.isLoading}
         >
           Add task<i className='fa-solid fa-plus'></i>
-          {counterContext.counter}
+          {/* {counterContext.counter} */}{/* edit 59 */}
         </Button>
     )
 }

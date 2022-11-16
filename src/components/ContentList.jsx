@@ -1,4 +1,4 @@
-import React, { memo } from "react";
+import React, { memo} from "react";
 import styled from "styled-components";
 
 
@@ -44,22 +44,60 @@ const Input = styled.input`
     display: block;
   }
 `
+const Span = styled.span`
+margin-right: auto;
+`
+const deleteItem = styled.button`
+  background-color: #fff;
+  width: 1.5rem;
+  height: 1.5rem;
+  &:hover{
+    box-shadow: 0px 10px 39px 0px rgba(0,0,0,0.1);
+    cursor: pointer;
+  }
+  &:focus{
+    outline: 1px solid #fff;
+    outline-offset: 2px;
+  }
+  &:active{
+    outline: 1px solid #fff;
+    outline-offset: 2px;
+    transform: scale(0.98);
+    transition: 0.35s ease-in;
+  }
+  &:disabled {
+    filter: brightness(0.8);
+    cursor: not-allowed;
+    &:active {
+      transform: scale(1);
+    }
+  }
+`
 
-function ContentList({children, status, onUpdatedTodo, id, data,disabled}){
+function ContentList({children, status, onUpdatedTodo, id, data,disabled,onDelete}){
     return(
       <Li>
         <Content>
           <div>
               <Input
-               type="checkbox"
-               checked={status === "DONE"}
+                type="checkbox"
+                checked={status === "DONE"}
                 onChange={(e) => {
                 onUpdatedTodo(id, "DONE", data)
               }}
               disabled={disabled}
               />
           </div>
-          <span>{children ? children : "test"}</span>
+          <Span>{children ? children : "test"}</Span>
+          <deleteItem
+            type="button"
+            onChange={(e)=>{
+            onDelete(id)
+            }}
+            disabled={disabled}
+          >
+            <i className="fa-solid fa-xmark"></i>
+          </deleteItem>
         </Content>
       </Li>
     )
