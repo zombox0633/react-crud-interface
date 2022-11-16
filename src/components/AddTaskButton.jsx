@@ -1,5 +1,6 @@
-import React from "react"
+import React,{useContext} from "react"
 import styled from "styled-components"
+import { TodoContext } from "../context/todoContext"
 
 const Button = styled.button`
   background-color: ${(props)=>
@@ -45,16 +46,21 @@ function AddTaskButton({
   disabled,
   type = "button",
   onSubmit }){
+    const counterContext = useContext(TodoContext)
     return(
         <Button 
           type={type}
           BgColor={BgColor} 
           //onClick={()=> onClick()} 
-          onClick={() => onClick && onClick()}
+          onClick={() => {
+            //onClick && onClick()
+            counterContext.onIncrement()
+          }}
           onSubmit={() => onSubmit && onSubmit()}
           disabled={disabled}
         >
           Add task<i className='fa-solid fa-plus'></i>
+          {counterContext.counter}
         </Button>
     )
 }

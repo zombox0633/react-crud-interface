@@ -1,6 +1,7 @@
-import React from "react";
+import React,{useContext} from "react";
 import styled from "styled-components";
 import ContentList from "./ContentList";
+import { TodoContext } from "../context/todoContext";
 
 const Ui = styled.ul`
 margin: 0;
@@ -12,14 +13,26 @@ justify-content: center;
 align-items: center;
 `
 
-function Ul({data}){
+function Ul({data,onUpdatedTodo,disabled}){
+    const counterContext = useContext(TodoContext)
     return(
         <Ui>
+            <h1>{counterContext.counter}</h1>
             {data &&
                 data.map((todo,index)=>{
-                    return <ContentList key={todo.id}>{JSON.stringify(todo.content)}</ContentList>
-                })
-            }
+                    return (
+                        <ContentList
+                        key={todo.id}
+                        status={todo.status}
+                        onUpdatedTodo={onUpdatedTodo}
+                        id={todo.id}
+                        data={todo}
+                        disabled={disabled}
+                        >
+                            {todo.content}
+                        </ContentList>
+                    )
+            })}
         </Ui>
     )
 }

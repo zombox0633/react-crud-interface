@@ -1,4 +1,4 @@
-import React from "react"
+import React, { memo } from "react";
 import styled from "styled-components";
 
 
@@ -28,6 +28,10 @@ const Input = styled.input`
   justify-content: center;
   align-items: center;
 
+  &:disabled {
+    background-color: #e2e2e2;
+  }
+
   &:after {
     content: "\f00c";
     font: var(--fa-font-solid);
@@ -41,16 +45,23 @@ const Input = styled.input`
   }
 `
 
-function ContentList({children}){
+function ContentList({children, status, onUpdatedTodo, id, data,disabled}){
     return(
       <Li>
         <Content>
           <div>
-              <Input type="checkbox" />
+              <Input
+               type="checkbox"
+               checked={status === "DONE"}
+                onChange={(e) => {
+                onUpdatedTodo(id, "DONE", data)
+              }}
+              disabled={disabled}
+              />
           </div>
-          <span>{children}</span>
+          <span>{children ? children : "test"}</span>
         </Content>
       </Li>
     )
 }
-export default ContentList
+export default memo(ContentList)

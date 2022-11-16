@@ -1,7 +1,6 @@
 import React, { useMemo, useState } from "react"
 import { toast } from "react-toastify"
 import styled from "styled-components"
-import http from "../config/axiosGlobalConfig"
 import AddTaskButton from "./AddTaskButton"
 
 const ModalWrapper = styled.div`
@@ -49,31 +48,30 @@ const Input = styled.input`
   margin-bottom: auto;
 `
 
-function CreateTodoModal({onClose,onFetchData}) {
+function CreateTodoModal({ onClose, onFetchData, onCreateNewTodo }) {
 
   const [content, setContent] = useState("")
   const [isLoading, setIsLoading] = useState(false)
   //const inputEle = useRef()
   //const cl = () => console.log(inputEle.current.value)
-
+  const onCreateNewTodoData = (todoContent) => {
+    return {
+      topic: "earth",
+      content: todoContent,
+      status: "TODO",
+      priority: 0,
+      removeStatus: false
+    }
+  }
   const handleCreateNewTodo = async (todoContent) => {
     try {
-      const newTodo = {
-        "topic": "earth",
-        "content": todoContent,
-        "status": "TODO",
-        "priority": 0,
-        "removeStatus": false
-      }
-
       setIsLoading(true)
-      await http.post("/rest/card", {
-        ...newTodo
-      })
-
+      const newData = onCreateNewTodoData(todoContent)
+      await onCreateNewTodo(newData)
+      await onFetchData()
+      setContent("")
       toast.success("Create new todo has successfully")
       onClose()
-      await onFetchData()
       // console.log(" response :", response)
     } catch (error) {
       toast.error(`${error?.response?.data?.message ?? "Opp !!"}`)
